@@ -1,9 +1,29 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@model List<Form.Models.Product>
+
+@section Styles {
+    <style>
+        h1 {
+            color: orangered;
+        }
+    </style>
+}
+
+@section Header {
+    <h1>Header Index</h1>
+}
+
+@foreach (var product in @Model)
+{
+    @Html.Partial("_Product", product)
+}
 
 <div>
     <h1 class="text-center">SEND A MESSAGE</h1>
+
+    @Html.Partial("_SimpleList")
 
     <form>
         <div class="form-group">
@@ -28,3 +48,7 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+
+} 
