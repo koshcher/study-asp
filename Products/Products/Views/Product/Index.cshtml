@@ -1,0 +1,13 @@
+﻿@model List<Products.Models.Product>
+
+@{
+    ViewBag.Title = "PRODUCTS";
+}
+
+<h2>PRODUCTS LIST</h2>
+@Html.Partial("_ProductList", Model)
+
+<br />
+
+<h2>PRODUCTS TABLE</h2>
+@Html.Partial("_ProductTable", Model)

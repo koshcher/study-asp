@@ -1,0 +1,14 @@
+﻿@model List<Products.Models.Product>
+
+@{
+    Layout = null;
+}
+
+<ul>
+    @foreach (var product in Model)
+    {
+        <li>
+            @product.ID. @product.Name - @product.Price$ (@product.CreatedDate.ToString())
+        </li>
+    }
+</ul>

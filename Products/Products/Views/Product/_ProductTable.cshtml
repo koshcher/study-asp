@@ -1,0 +1,23 @@
+﻿@model List<Products.Models.Product>
+
+@{
+    Layout = null;
+}
+
+<table style="width: 100%;">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>CreatedDate</th>
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.ID</td>
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+            <td>@product.CreatedDate</td>
+        </tr>
+    }
+</table>
