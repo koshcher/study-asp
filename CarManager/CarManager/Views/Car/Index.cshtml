@@ -1,4 +1,4 @@
-﻿@model CarManager.Models.Car
+﻿@model List<CarManager.Models.Car>
 
 @{
     ViewBag.Title = "Index";
@@ -8,7 +8,7 @@
 
 @using (Html.BeginForm("Create", "Car", FormMethod.Post))
 {
-    <h4>Create</h4>
+    <h4>New Car</h4>
     <div class="form-group">
         @Html.TextBox("Name", "", new { @class = "form-control", placeholder = "name" })
     </div>
@@ -30,12 +30,26 @@
         </label>
     </div>
 
-    <input type="submit" value="Find" class="btn btn-default" />
+    <input type="submit" value="Create" class="btn btn-default" />
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<hr />
+
+<ul class="list-group">
+    @foreach (var car in Model)
+    {
+        <li class="list-group-item">
+            <h4 class="list-group-item-heading">@car.Name</h4>
+            <p class="list-group-item-text">Model: @car.Model, Num: @car.Num, Year: @car.Year, Secondhand: @car.Secondhand</p>
+            <a href="@Url.Action("Edit", new {id=car.Id})" class="btn btn-default">Edit</a>
+            @using (Html.BeginForm("Delete", "Car", FormMethod.Get))
+            {
+                @Html.Hidden("id", car.Id)
+                <input type="submit" value="Delete" class="btn btn-default" />
+            }
+        </li>
+    }
+</ul>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

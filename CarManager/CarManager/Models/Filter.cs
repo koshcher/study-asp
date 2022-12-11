@@ -9,6 +9,13 @@ namespace CarManager.Models
     public List<string> Colors { get; set; }
   }
 
+  public enum SecondhandState
+  {
+    All,
+    New,
+    Secondhand
+  }
+
   public class FilterModel
   {
     public string Name { get; set; }
@@ -16,6 +23,6 @@ namespace CarManager.Models
     public int? Num { get; set; }
     public int? Year { get; set; }
     public string Color { get; set; }
-    public bool Secondhand { get; set; }
+    public SecondhandState State { get; set; }
   }
 }

@@ -171,6 +171,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Car\Filter.cshtml" />
     <Content Include="Views\Car\Index.cshtml" />
+    <Content Include="Views\Car\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

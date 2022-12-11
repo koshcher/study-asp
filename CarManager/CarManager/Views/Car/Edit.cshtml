@@ -1,0 +1,34 @@
+﻿@model CarManager.Models.Car
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit car</h2>
+
+@using (Html.BeginForm("Update", "Car", FormMethod.Post))
+{
+    @Html.Hidden("Id", Model.Id);
+    <div class="form-group">
+        @Html.TextBox("Name", Model.Name, new { @class = "form-control", placeholder = "name" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Model", Model.Model, new { @class = "form-control", placeholder = "model" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Num", Model.Num, new { @class = "form-control", type = "number", min = 0, placeholder = "num" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Year", Model.Year, new { @class = "form-control", type = "number", min = 1500, placeholder = "year" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Color", Model.Color, new { @class = "form-control", placeholder = "color" })
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBox("Secondhand", Model.Secondhand) Secondhand
+        </label>
+    </div>
+
+    <input type="submit" value="Update" class="btn btn-default" />
+}
