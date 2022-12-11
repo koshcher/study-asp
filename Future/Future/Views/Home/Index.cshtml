@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("Index", "Home"))
+{
+
+    @Html.TextArea("myText", "val");
+
+    @Html.DropDownList("List", new List<SelectListItem>() { new SelectListItem() { Text = "Op1", Value = "1" }, new SelectListItem() { Text = "Op2", Value = "2" } });
+
+    @Html.ListBox("Box", new List<SelectListItem>() { new SelectListItem() { Text = "Op1", Value = "1" }, new SelectListItem() { Text = "Op2", Value = "2" } });
+}

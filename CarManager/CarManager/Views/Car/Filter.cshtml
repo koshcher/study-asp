@@ -1,0 +1,41 @@
+﻿@model CarManager.Models.FilterViewModel
+
+@{
+    ViewBag.Title = "Filter";
+}
+
+<h2>Find car by filter</h2>
+
+@using (Html.BeginForm("Filter", "Car", FormMethod.Get, new { @class = "form-inline" }))
+{
+
+    <div class="form-group">
+        @Html.TextBox("Name", "", new { @class = "form-control", placeholder = "name" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Model", "", new { @class = "form-control", placeholder = "model" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Num", null, new { @class = "form-control", type = "number", min = 0, placeholder = "num" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Year", null, new { @class = "form-control", type = "number", min = 0, placeholder = "year" })
+    </div>
+    <div class="form-group">
+        @Html.DropDownList("Color", Model.Colors.Select(c => new SelectListItem { Text = c, Value = c }), new { @class = "form-control" })
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBox("Secondhand", false) Secondhand
+        </label>
+    </div>
+
+    <input type="submit" value="Find" class="btn btn-default" />
+}
+
+<ul>
+    @foreach (var car in Model.Cars)
+    {
+        <li>@car.Name</li>
+    }
+</ul>

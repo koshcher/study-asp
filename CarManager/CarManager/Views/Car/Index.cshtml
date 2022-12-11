@@ -1,0 +1,42 @@
+﻿@model CarManager.Models.Car
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Manage Cars</h2>
+
+@using (Html.BeginForm("Create", "Car", FormMethod.Post))
+{
+    <h4>Create</h4>
+    <div class="form-group">
+        @Html.TextBox("Name", "", new { @class = "form-control", placeholder = "name" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Model", "", new { @class = "form-control", placeholder = "model" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Num", null, new { @class = "form-control", type = "number", min = 0, placeholder = "num" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Year", null, new { @class = "form-control", type = "number", min = 1500, placeholder = "year" })
+    </div>
+    <div class="form-group">
+        @Html.TextBox("Color", "", new { @class = "form-control", placeholder = "color" })
+    </div>
+    <div class="checkbox">
+        <label>
+            @Html.CheckBox("Secondhand", false) Secondhand
+        </label>
+    </div>
+
+    <input type="submit" value="Find" class="btn btn-default" />
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
