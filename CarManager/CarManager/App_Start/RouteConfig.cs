@@ -12,7 +12,7 @@ namespace CarManager
       routes.MapRoute(
           name: "Default",
           url: "{controller}/{action}/{id}",
-          defaults: new { controller = "Car", action = "Index", id = UrlParameter.Optional }
+          defaults: new { controller = "Car", action = "Filter", id = UrlParameter.Optional }
       );
     }
   }

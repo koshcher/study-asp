@@ -10,4 +10,9 @@
   {
     public string Email { get; set; }
   }
+
+  public class User : RegisterModel
+  {
+    public int Id { get; set; }
+  }
 }

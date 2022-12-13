@@ -9,5 +9,7 @@
     public int Year { get; set; }
     public string Color { get; set; }
     public bool Secondhand { get; set; }
+
+    public User User { get; set; }
   }
 }

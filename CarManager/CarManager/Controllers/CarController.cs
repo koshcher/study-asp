@@ -12,14 +12,28 @@ namespace CarManager.Controllers
   {
     private readonly CarManagerDbContext db = new CarManagerDbContext();
 
+    private int? UserId()
+    {
+      if (Request.Cookies["AuthKey"] == null) return null;
+      return int.Parse(Request.Cookies["AuthKey"].Value);
+    }
+
     public ActionResult Index()
     {
-      var cars = db.Cars.ToList();
+      int? userId = UserId();
+      if (userId == null) return RedirectToAction("Login", "Auth");
+
+      var cars = db.Cars.Where(c => c.User.Id == userId).ToList();
       return View(cars);
     }
 
     public ActionResult Create(Car car)
     {
+      int? userId = UserId();
+      if (userId == null) return RedirectToAction("Login", "Auth");
+
+      car.User = db.Users.Find(userId);
+
       db.Cars.Add(car);
       db.SaveChanges();
       return Redirect("Index");
@@ -28,14 +42,20 @@ namespace CarManager.Controllers
     [HttpGet]
     public ActionResult Edit(int id)
     {
-      var car = db.Cars.Find(id);
+      int? userId = UserId();
+      if (userId == null) return RedirectToAction("Login", "Auth");
+
+      var car = db.Cars.First(c => c.User.Id == userId && c.Id == id);
       return View(car);
     }
 
     [HttpPost]
     public ActionResult Update(Car car)
     {
-      var dbCar = db.Cars.Find(car.Id);
+      int? userId = UserId();
+      if (userId == null) return RedirectToAction("Login", "Auth");
+
+      var dbCar = db.Cars.First(c => c.User.Id == userId && c.Id == car.Id);
       dbCar.Num = car.Num;
       dbCar.Name = car.Name;
       dbCar.Year = car.Year;
@@ -48,7 +68,10 @@ namespace CarManager.Controllers
 
     public ActionResult Delete(int id)
     {
-      var car = db.Cars.Find(id);
+      int? userId = UserId();
+      if (userId == null) return RedirectToAction("Login", "Auth");
+
+      var car = db.Cars.First(c => c.User.Id == userId && c.Id == id);
       db.Cars.Remove(car);
       db.SaveChanges();
       return Redirect("Index");
