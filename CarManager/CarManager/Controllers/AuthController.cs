@@ -1,8 +1,7 @@
 ﻿using CarManager.Context;
-using CarManager.Models;
+using CarManager.Helper;
 using CarManager.Models.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,7 +10,12 @@ namespace CarManager.Controllers
 {
   public class AuthController : Controller
   {
-    private CarManagerDbContext _db = new CarManagerDbContext();
+    private readonly CarManagerDbContext _db;
+
+    public AuthController()
+    {
+      _db = UnityConfig.Resolver.GetService<CarManagerDbContext>();
+    }
 
     [HttpGet]
     public ActionResult Login()
@@ -32,7 +36,7 @@ namespace CarManager.Controllers
 
       Response.Cookies.Add(new HttpCookie("AuthKey", user.Id.ToString()) { Expires = DateTime.Now.AddMinutes(15) });
 
-      return RedirectToAction("Index", "Car");
+      return RedirectToAction("Index", "Home");
     }
 
     [HttpGet]
@@ -66,7 +70,8 @@ namespace CarManager.Controllers
     public ActionResult Logout()
     {
       Response.Cookies.Add(new HttpCookie("AuthKey", "") { Expires = DateTime.Now.AddMinutes(-15) });
-      return RedirectToAction("Filter", "Car");
+      Identity.User = null;
+      return RedirectToAction("Index", "Home");
     }
   }
 }

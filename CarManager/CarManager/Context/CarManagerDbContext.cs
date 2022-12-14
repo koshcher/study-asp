@@ -5,7 +5,7 @@ namespace CarManager.Context
 {
   public class CarManagerDbContext : DbContext
   {
-    public CarManagerDbContext() : base("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CarManager;")
+    public CarManagerDbContext(string connStr) : base(connStr)
     {
     }
 

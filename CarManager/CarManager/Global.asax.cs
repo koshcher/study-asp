@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Configuration;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
@@ -9,6 +10,7 @@ namespace CarManager
     protected void Application_Start()
     {
       AreaRegistration.RegisterAllAreas();
+      UnityConfig.RegisterComponents(ConfigurationManager.ConnectionStrings["dbConStr"].ConnectionString);
       FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       BundleConfig.RegisterBundles(BundleTable.Bundles);

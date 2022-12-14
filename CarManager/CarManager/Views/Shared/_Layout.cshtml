@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using CarManager.Helper
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -11,16 +13,16 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Find", "Filter", "Car")</li>
-                @if (Request.Cookies["AuthKey"] == null)
+                <li>@Html.ActionLink("Find", "Index", "Home")</li>
+                @if (Identity.User == null)
                 {
-                    <li>@Html.ActionLink("Login", "Login", "Auth")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Auth")</li>
+                <li>@Html.ActionLink("Login", "Login", "Auth")</li>
+                <li>@Html.ActionLink("Register", "Register", "Auth")</li>
                 }
                 else
                 {
-                    <li>@Html.ActionLink("Manage", "Index", "Car")</li>
-                    <li>@Html.ActionLink("Logout", "Logout", "Auth")</li>
+                <li>@Html.ActionLink("Manage", "Index", "Manage")</li>
+                <li>@Html.ActionLink("Logout", "Logout", "Auth")</li>
                 }
             </ul>
         </div>
