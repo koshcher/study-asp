@@ -21,7 +21,12 @@
                 }
                 else
                 {
+                    if (Identity.User.Manager != null)
+                    {
                 <li>@Html.ActionLink("Manage", "Index", "Manage")</li>
+                    }
+
+                <li>@Html.ActionLink("Cart", "Index", "Cart")</li>
                 <li>@Html.ActionLink("Logout", "Logout", "Auth")</li>
                 }
             </ul>

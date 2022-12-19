@@ -5,15 +5,15 @@ using System.Web.Routing;
 
 namespace CarManager
 {
-  public class MvcApplication : System.Web.HttpApplication
-  {
-    protected void Application_Start()
+    public class MvcApplication : System.Web.HttpApplication
     {
-      AreaRegistration.RegisterAllAreas();
-      UnityConfig.RegisterComponents(ConfigurationManager.ConnectionStrings["dbConStr"].ConnectionString);
-      FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-      RouteConfig.RegisterRoutes(RouteTable.Routes);
-      BundleConfig.RegisterBundles(BundleTable.Bundles);
+        protected void Application_Start()
+        {
+            AreaRegistration.RegisterAllAreas();
+            UnityConfig.RegisterComponents(ConfigurationManager.ConnectionStrings["dbConStr"].ConnectionString);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
     }
-  }
 }

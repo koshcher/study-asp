@@ -1,26 +1,20 @@
-﻿using CarManager.Context;
+﻿using CarManager.Context.Repository;
 using CarManager.Helper;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace CarManager.Filters
 {
-  public class InitUserFilter : FilterAttribute, IAuthorizationFilter
-  {
-    private readonly CarManagerDbContext _db;
-
-    public InitUserFilter()
+    public class InitUserFilter : FilterAttribute, IAuthorizationFilter
     {
-      _db = UnityConfig.Resolver.GetService<CarManagerDbContext>();
-    }
+        private readonly UserRepository _ur = UnityConfig.Resolver.GetService<UserRepository>();
 
-    public void OnAuthorization(AuthorizationContext filterContext)
-    {
-      if (filterContext.HttpContext.Request.Cookies["AuthKey"] != null)
-      {
-        int userId = int.Parse(filterContext.HttpContext.Request.Cookies["AuthKey"].Value);
-        Identity.User = _db.Users.First(u => u.Id == userId);
-      }
+        public void OnAuthorization(AuthorizationContext filterContext)
+        {
+            if (filterContext.HttpContext.Request.Cookies["AuthKey"] != null)
+            {
+                int userId = int.Parse(filterContext.HttpContext.Request.Cookies["AuthKey"].Value);
+                Identity.User = _ur.Get(userId);
+            }
+        }
     }
-  }
 }

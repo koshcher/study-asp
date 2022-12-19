@@ -1,77 +1,69 @@
-﻿using CarManager.Context;
+﻿using CarManager.Context.Models;
 using CarManager.Helper;
 using CarManager.Models.ViewModels;
+using CarManager.Services;
 using System;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace CarManager.Controllers
 {
-  public class AuthController : Controller
-  {
-    private readonly CarManagerDbContext _db;
-
-    public AuthController()
+    public class AuthController : Controller
     {
-      _db = UnityConfig.Resolver.GetService<CarManagerDbContext>();
+        private readonly AuthService _as = UnityConfig.Resolver.GetService<AuthService>();
+
+        [HttpGet]
+        public ActionResult Login() => View();
+
+        [HttpPost]
+        public ActionResult Login(LoginViewModel data)
+        {
+            var user = _as.Login(data.Email, data.Password);
+
+            if (user == null)
+            {
+                ViewBag.Error = "User not found";
+                return View();
+            }
+
+            Response.Cookies.Add(new HttpCookie("AuthKey", user.Id.ToString()) { Expires = DateTime.Now.AddMinutes(15) });
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult Register() => View();
+
+        [HttpPost]
+        public ActionResult Register(RegisterViewModel data)
+        {
+            if (data.Email.IsEmpty() || data.Password.IsEmpty())
+            {
+                ViewBag.Error = "Email and password can't be empty";
+                return View();
+            }
+            if (data.Password != data.ConfirmPassword)
+            {
+                ViewBag.Error = "Confirm Password != Password";
+                return View();
+            }
+
+            var user = _as.Register(new User { Name = data.Name, Email = data.Email, Password = data.Password }, data.IsManager);
+            if (user == null)
+            {
+                ViewBag.Error = "User exists";
+                return View();
+            }
+            return View("Login");
+        }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            Response.Cookies.Add(new HttpCookie("AuthKey", "") { Expires = DateTime.Now.AddMinutes(-15) });
+            Identity.User = null;
+            return RedirectToAction("Index", "Home");
+        }
     }
-
-    [HttpGet]
-    public ActionResult Login()
-    {
-      return View();
-    }
-
-    [HttpPost]
-    public ActionResult Login(LoginViewModel data)
-    {
-      var user = _db.Users.FirstOrDefault(u => u.Email == data.Email && u.Password == data.Password);
-
-      if (user == null)
-      {
-        ViewBag.Error = "User not found";
-        return View();
-      }
-
-      Response.Cookies.Add(new HttpCookie("AuthKey", user.Id.ToString()) { Expires = DateTime.Now.AddMinutes(15) });
-
-      return RedirectToAction("Index", "Home");
-    }
-
-    [HttpGet]
-    public ActionResult Register()
-    {
-      return View();
-    }
-
-    [HttpPost]
-    public ActionResult Register(RegisterViewModel data)
-    {
-      if (data.Password != data.ConfirmPassword)
-      {
-        ViewBag.Error = "Confirm Password != Password";
-        return View();
-      }
-
-      var exist = _db.Users.Any(u => u.Email == data.Email);
-      if (exist)
-      {
-        ViewBag.Error = "User exists";
-        return View();
-      }
-
-      _db.Users.Add(new Models.User() { Email = data.Email, Name = data.Name, Password = data.Password });
-      _db.SaveChanges();
-      return View("Login");
-    }
-
-    [HttpGet]
-    public ActionResult Logout()
-    {
-      Response.Cookies.Add(new HttpCookie("AuthKey", "") { Expires = DateTime.Now.AddMinutes(-15) });
-      Identity.User = null;
-      return RedirectToAction("Index", "Home");
-    }
-  }
 }
