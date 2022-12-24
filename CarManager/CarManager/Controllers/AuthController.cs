@@ -11,7 +11,7 @@ namespace CarManager.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly AuthService _as = UnityConfig.Resolver.GetService<AuthService>();
+        private readonly AuthService _auth = UnityConfig.Resolver.GetService<AuthService>();
 
         [HttpGet]
         public ActionResult Login() => View();
@@ -19,7 +19,7 @@ namespace CarManager.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel data)
         {
-            var user = _as.Login(data.Email, data.Password);
+            var user = _auth.Login(data.Email, data.Password);
 
             if (user == null)
             {
@@ -28,7 +28,6 @@ namespace CarManager.Controllers
             }
 
             Response.Cookies.Add(new HttpCookie("AuthKey", user.Id.ToString()) { Expires = DateTime.Now.AddMinutes(15) });
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -49,10 +48,10 @@ namespace CarManager.Controllers
                 return View();
             }
 
-            var user = _as.Register(new User { Name = data.Name, Email = data.Email, Password = data.Password }, data.IsManager);
+            var user = _auth.Register(new User { Name = data.Name, Email = data.Email, Password = data.Password }, data.IsManager);
             if (user == null)
             {
-                ViewBag.Error = "User exists";
+                ViewBag.Error = "Email is taken";
                 return View();
             }
             return View("Login");

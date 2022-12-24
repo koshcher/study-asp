@@ -1,5 +1,6 @@
 ﻿using CarManager.Context.Models;
 using CarManager.Context.Repository;
+using CarManager.Helper;
 using CarManager.Models;
 using System;
 using System.Collections.Generic;
@@ -11,28 +12,22 @@ namespace CarManager.Services
 {
     public class CarService
     {
-        private readonly CarRepository _repo = UnityConfig.Resolver.GetService<CarRepository>();
+        private readonly CarRepository _cars = UnityConfig.Resolver.GetService<CarRepository>();
 
-        public void Add(Car car) => _repo.Add(car);
+        public void Add(Car car)
+        {
+            car.ManagerId = Identity.User.Manager.Id;
+            _cars.Add(car);
+        }
 
         public void Update(Car car)
         {
-            _repo.Update(car);
+            _cars.Update(car);
         }
 
-        public void Delete(int id) => _repo.Delete(id);
+        public void Delete(int id) => _cars.Delete(id);
 
-        public void Get(int id) => _repo.Get(id);
-
-        public List<Car> GetAll()
-        {
-            return GetByCondition(c => true);
-        }
-
-        public List<Car> GetByCondition(Expression<Func<Car, bool>> predicate)
-        {
-            return _repo.GetByCondition(predicate);
-        }
+        public List<Car> GetByCondition(Expression<Func<Car, bool>> predicate) => _cars.GetByCondition(predicate);
 
         public List<Car> Filter(FilterModel filter)
         {
@@ -53,7 +48,7 @@ namespace CarManager.Services
             if (filter.Num != null) predicates.Add(c => c.Num == filter.Num);
             if (filter.Year != null) predicates.Add(c => c.Year == filter.Year);
 
-            return _repo.GetByConditions(predicates);
+            return _cars.GetByConditions(predicates);
         }
     }
 }

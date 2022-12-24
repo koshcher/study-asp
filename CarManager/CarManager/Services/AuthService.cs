@@ -7,33 +7,19 @@ namespace CarManager.Services
 {
     public class AuthService
     {
-        private readonly UserRepository _urepo = UnityConfig.Resolver.GetService<UserRepository>();
-        private readonly ManagerRepository _mrepo = UnityConfig.Resolver.GetService<ManagerRepository>();
+        private readonly UserRepository users = UnityConfig.Resolver.GetService<UserRepository>();
 
         public User Login(string email, string password)
         {
-            User user = _urepo.GetByCondition(u => u.Password == password && u.Email == email)
-                      .FirstOrDefault();
-            user.Manager = _mrepo.Get(user.Id);
-            return user;
+            return users.GetByCondition(u => u.Password == password && u.Email == email).FirstOrDefault();
         }
 
         public User Register(User user, bool isManager)
         {
-            var repoUser = _urepo.GetByCondition(u => u.Email == user.Email).FirstOrDefault();
-
-            if (repoUser != null) return null;
-
-            _urepo.Add(user);
-
-            if (isManager)
-            {
-                _mrepo.Add(new Manager { Id = user.Id });
-            }
-
+            if (users.GetByCondition(u => u.Email == user.Email).FirstOrDefault() != null) return null;
+            if (isManager) user.Manager = new Manager { Id = user.Id };
+            users.Add(user);
             return user;
         }
-
-        public User Get(int id) => _urepo.Get(id);
     }
 }

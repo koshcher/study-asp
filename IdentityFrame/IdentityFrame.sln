@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityFrame", "IdentityFrame\IdentityFrame.csproj", "{B3E53187-8D2C-4977-8A43-234AF9AF7975}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3E53187-8D2C-4977-8A43-234AF9AF7975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3E53187-8D2C-4977-8A43-234AF9AF7975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3E53187-8D2C-4977-8A43-234AF9AF7975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3E53187-8D2C-4977-8A43-234AF9AF7975}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {125C356E-89F7-4F6C-945B-56696F520F49}
+	EndGlobalSection
+EndGlobal

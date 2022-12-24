@@ -36,6 +36,7 @@ namespace CarManager.Context.Repository
         public List<User> GetByCondition(Expression<Func<User, bool>> predicate)
         {
             return _db.Users.Where(predicate)
+                .Include(u => u.Manager)
                 .Include(nameof(User.UserCars))
                 .ToList();
         }
